@@ -1,0 +1,96 @@
+USE [SP_CRUD_DB]
+GO
+/****** Object:  StoredProcedure [dbo].[AddNewProduct]    Script Date: 23-06-2024 23:00:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[AddNewProduct]
+	@ProductName NVARCHAR (MAX),
+    @ProductDescription NVARCHAR (MAX),
+	@ProductPrice INT,
+	@ProductStock INT
+
+	AS
+	INSERT INTO [dbo].[Products]
+		(
+			ProductName,
+			ProductDescription,
+			ProductPrice,
+			ProductStock
+		)
+    VALUES
+		(
+			@ProductName,
+			@ProductDescription,
+			@ProductPrice,
+			@ProductStock
+			)
+
+
+USE [SP_CRUD_DB]
+GO
+/****** Object:  StoredProcedure [dbo].[GetProductByID]    Script Date: 23-06-2024 23:00:03 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetProductByID]
+@ProductId int
+AS
+BEGIN
+	SELECT
+		ProductId,
+		ProductName,
+		ProductDescription,
+		ProductPrice,
+		ProductStock
+	FROM dbo.Products where ProductId = @ProductId
+END
+
+
+USE [SP_CRUD_DB]
+GO
+/****** Object:  StoredProcedure [dbo].[GetProductList]    Script Date: 23-06-2024 22:59:12 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetProductList]
+AS
+	SELECT * FROM [dbo].[Products]
+RETURN 0
+
+
+USE [SP_CRUD_DB]
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateProduct]    Script Date: 23-06-2024 22:58:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[UpdateProduct]
+@ProductId int,
+@ProductName [nvarchar](max),
+@ProductDescription [nvarchar](max),
+@ProductPrice int,
+@ProductStock int
+AS
+BEGIN
+	UPDATE dbo.Products
+    SET
+		ProductName = @ProductName,
+		ProductDescription = @ProductDescription,
+		ProductPrice = @ProductPrice,
+		ProductStock = @ProductStock
+	WHERE ProductId = @ProductId
+END
+
+
+CREATE PROCEDURE [dbo].[DeletePrductByID]
+@ProductId int
+AS
+BEGIN 
+	DELETE FROM Products WHERE ProductId = @ProductId
+END
